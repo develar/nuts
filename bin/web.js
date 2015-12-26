@@ -6,6 +6,14 @@ var nuts = require('../');
 
 var app = express();
 
+if (process.env.GA_ID != null) {
+  app.use(require('cookie-parser')(process.env.COOKIE_SECRET))
+  app.use(require('express-session')())
+  app.use(require('nodalytics')(process.env.GA_ID))
+}
+
+app.set('trust proxy', 'true')
+
 var apiAuth =  {
     username: process.env.API_USERNAME,
     password: process.env.API_PASSWORD
