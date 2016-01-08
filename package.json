@@ -6,29 +6,28 @@
   "homepage": "https://github.com/GitbookIO/nuts",
   "license": "Apache-2.0",
   "dependencies": {
-    "analytics-node": "2.0.1",
     "basic-auth": "1.0.3",
     "body-parser": "1.14.2",
     "cookie-parser": "^1.4.0",
     "destroy": "1.0.3",
     "express": "^4.13.3",
-    "express-session": "^1.12.1",
     "express-useragent": "0.2.4",
     "github-webhook-handler": "0.5.0",
     "lodash": "3.10.1",
-    "nodalytics": "^1.1.0",
     "octonode": "0.7.4",
     "q": "1.4.1",
     "request": "2.67.0",
     "semver": "5.1.0",
     "stores": "0.0.2",
     "strip-bom": "2.0.0",
-    "uuid": "2.0.1"
+    "node-uuid": "1.4.7"
   },
   "devDependencies": {
-    "cookie-parser": "^1.4.0",
     "mocha": "2.3.4",
-    "should": "8.0.2"
+    "rimraf": "^2.5.0",
+    "should": "8.0.2",
+    "tsconfig-glob": "^0.3.3",
+    "typescript": "^1.8.0-dev.20160101"
   },
   "bugs": {
     "url": "https://github.com/GitbookIO/nuts/issues"
@@ -45,6 +44,7 @@
   },
   "scripts": {
     "start": "node bin/web.js",
-    "test": "mocha --reporter list"
+    "test": "mocha --reporter list",
+    "compile": "rimraf bin/out && tsconfig -i 2 && tsc"
   }
 }

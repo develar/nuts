@@ -1,3 +1,14 @@
-node_modules
-.idea
-test
+node_modules/
+.idea/
+test/
+typings/
+tsd.json
+tsconfig.json
+src/
+schema.png
+README.md
+.travis.yml
+.git/
+.gitignore
+Procfile
+.npmignore

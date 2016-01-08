@@ -1,0 +1,7 @@
+typings/
+tsd.json
+tsconfig.json
+src/
+schema.png
+README.md
+.travis.yml

@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "outDir": "bin/out",
+    "newLine": "LF",
+    "noResolve": true,
+    "noEmitOnError": true,
+    "inlineSources": true,
+    "sourceMap": true
+  },
+  "filesGlob": [
+    "src/*.ts",
+    "typings/**/*.d.ts"
+  ],
+  "files": [
+    "typings/express/express.d.ts",
+    "typings/mime/mime.d.ts",
+    "typings/node-uuid/node-uuid-base.d.ts",
+    "typings/node-uuid/node-uuid-cjs.d.ts",
+    "typings/node-uuid/node-uuid.d.ts",
+    "typings/node/node.d.ts",
+    "typings/serve-static/serve-static.d.ts",
+    "src/analytics.ts"
+  ]
+}

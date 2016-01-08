@@ -1,28 +1,16 @@
 var express = require('express');
-var uuid = require('uuid');
+var uuid = require('node-uuid');
 var basicAuth = require('basic-auth');
-var Analytics = require('analytics-node');
 var nuts = require('../');
 
 var app = express();
 
-if (process.env.GA_ID != null) {
-  app.use(require('cookie-parser')(process.env.COOKIE_SECRET))
-  app.use(require('express-session')())
-  app.use(require('nodalytics')(process.env.GA_ID))
-}
-
-app.set('trust proxy', 'true')
+const downloadTracker = require("./out/analytics").configure(app)
 
 var apiAuth =  {
     username: process.env.API_USERNAME,
     password: process.env.API_PASSWORD
 };
-
-var analytics = undefined;
-if (process.env.ANALYTICS_TOKEN) {
-    analytics = new Analytics(process.env.ANALYTICS_TOKEN);
-}
 
 var myNuts = nuts({
     repository: process.env.GITHUB_REPO,
@@ -34,26 +22,9 @@ var myNuts = nuts({
     refreshSecret: process.env.GITHUB_SECRET,
 
     onDownload: function(download, req, res, next) {
-        console.log('download', download.platform.filename, "for version", download.version.tag, "on channel", download.version.channel, "for", download.platform.type);
-
-        // Track on segment if enabled
-        if (analytics) {
-            var userId = req.query.user;
-
-            analytics.track({
-                event: process.env.ANALYTICS_EVENT_DOWNLOAD || 'download',
-                anonymousId: userId? null : uuid.v4(),
-                userId: userId,
-                properties: {
-                    version: download.version.tag,
-                    channel: download.version.channel,
-                    platform: download.platform.type,
-                    os: nuts.platforms.toType(download.platform.type)
-                }
-            });
-        }
-
-        next();
+      downloadTracker(req, res, download)
+      // console.log('download', download.platform.filename, "for version", download.version.tag, "on channel", download.version.channel, "for", download.platform.type);
+      next();
     },
 
     onAPIAccess: function(req, res, next) {
@@ -74,7 +45,7 @@ var myNuts = nuts({
             return next();
         } else {
             return unauthorized(res);
-        };
+        }
     }
 });
 
